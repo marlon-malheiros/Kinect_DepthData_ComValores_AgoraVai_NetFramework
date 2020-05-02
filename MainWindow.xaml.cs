@@ -156,8 +156,13 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
                 int depthFt = depthInches / 12;
                 depthInches = depthInches % 12;
 
-                PixelDepth.Text = string.Format("{0}mm ~ {1}'{2}\"", depth, depthFt, depthInches);
+                // PixelDepth.Text = string.Format("{0}mm ~ {1}'{2}\"", depth, depthFt, depthInches);
+                PixelDepth.Text = string.Format("{0}mm", depth);
             }
+        }
+        private void Button_SalvarNuvem_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Botão Clicado");
         }
     }
 }

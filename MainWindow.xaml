@@ -10,6 +10,7 @@
         <StackPanel>
             <TextBlock x:Name="PixelDepth" FontSize="48" HorizontalAlignment="Left"></TextBlock>
             <Image x:Name="DepthImage" Width="640" Height="480" MouseLeftButtonDown="DepthImage_MouseLeftButtonUp"/>
+            <Button Width="100" Height="18" x:Name="Button_SalvarNuvem" Click="Button_SalvarNuvem_OnClick" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="10">Salvar Nuvem</Button>
         </StackPanel>
     </Grid>
 </Window>
