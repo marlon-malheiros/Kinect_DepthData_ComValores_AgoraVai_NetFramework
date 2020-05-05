@@ -1,4 +1,5 @@
 ﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -19,11 +20,12 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
         private Int32Rect _DepthImageBitmapRect;
         private int _DepthImageStride;
         private DepthImageFrame _lastDepthFrame;
-        private short[] _depthImagePixelData;
-        public short[] _dadosDeProfundidadeRegistrados;
-        public List<int> dadosProfSemPIndex = new List<int>();
+        private short[] _depthImagePixelData;        
+        public int[] _dadosDeProfundidadeRegistrados;
+        // public List<int> dadosProfSemPIndex = new List<int>();
+        public List<string> dadosProfSemPIndex = new List<string>();
         #endregion
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -139,7 +141,7 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
 
             if (this._lastDepthFrame != null)
             {
-                // short[] pixelData = new short[this._lastDepthFrame.PixelDataLength];
+                // short[] pixelData = new short[this._lastDepthFrame.PixelDataLength];                
                 this._depthImagePixelData = new short[this._lastDepthFrame.PixelDataLength];
                 this._lastDepthFrame.CopyPixelDataTo(this._depthImagePixelData);
                 this._DepthImageBitmap.WritePixels(this._DepthImageBitmapRect, this._depthImagePixelData, this._DepthImageStride, 0);
@@ -171,8 +173,20 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
                 //foreach (int entrada in this._dadosDeProfundidadeRegistrados)
                 foreach (int entrada in this._depthImagePixelData)
                 {
-                    this.dadosProfSemPIndex.Add(entrada >> DepthImageFrame.PlayerIndexBitmaskWidth);
-                }                
+                    int valor = entrada >> DepthImageFrame.PlayerIndexBitmaskWidth;                    
+                    this.dadosProfSemPIndex.Add(Convert.ToString(valor));
+                    // this._dadosDeProfundidadeRegistrados.Append<int>(valor);
+                    // this.dadosProfSemPIndex.Add(entrada >> DepthImageFrame.PlayerIndexBitmaskWidth);
+                }
+                // System.IO.File.WriteAllText(@"C:\Users\Administrador\Desktop\Nuvem_teste.txt", this.dadosProfSemPIndex.ToString);
+                // System.IO.File.WriteAllBytes(@"C:\Users\Administrador\Desktop\Nuvem_teste.txt", this._depthImagePixelData);
+                using(System.IO.StreamWriter arquivo = new System.IO.StreamWriter(@"C:\Users\Administrador\Desktop\Nuvem_teste3.txt", true))
+                {
+                    foreach(string valor in this.dadosProfSemPIndex)
+                    {
+                        arquivo.WriteLine(valor);
+                    }
+                }
             }                
             else
             {
