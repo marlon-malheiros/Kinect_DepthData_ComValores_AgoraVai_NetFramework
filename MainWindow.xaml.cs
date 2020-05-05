@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using Microsoft.Kinect;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Kinect;
 
 namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
 {
@@ -13,13 +14,14 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
     public partial class MainWindow
     {
         #region Variaveis
-
         private KinectSensor _Kinect;
         private WriteableBitmap _DepthImageBitmap;
         private Int32Rect _DepthImageBitmapRect;
         private int _DepthImageStride;
         private DepthImageFrame _lastDepthFrame;
         private short[] _depthImagePixelData;
+        public short[] _dadosDeProfundidadeRegistrados;
+        public List<int> dadosProfSemPIndex = new List<int>();
         #endregion
         
         public MainWindow()
@@ -162,7 +164,20 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
         }
         private void Button_SalvarNuvem_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Botão Clicado");
+            // Verifica se o frame é valido
+            if (this._depthImagePixelData != null && this._depthImagePixelData.Length > 0)
+            {
+                // this._dadosDeProfundidadeRegistrados = this._depthImagePixelData;
+                //foreach (int entrada in this._dadosDeProfundidadeRegistrados)
+                foreach (int entrada in this._depthImagePixelData)
+                {
+                    this.dadosProfSemPIndex.Add(entrada >> DepthImageFrame.PlayerIndexBitmaskWidth);
+                }                
+            }                
+            else
+            {
+                MessageBox.Show("Erro: this._depthImagePixelData == null ou this._depthImagePixelData.Length < 0");
+            }         
         }
     }
 }
