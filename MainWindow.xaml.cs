@@ -176,6 +176,7 @@ namespace Kinect_DepthData_ComValores_AgoraVai_NetFramework
             }                
             else
             {
+                // Melhor ver outra mensagem
                 MessageBox.Show("Erro: this._depthImagePixelData == null ou this._depthImagePixelData.Length < 0");
             }         
         }
